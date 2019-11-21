@@ -1,6 +1,6 @@
 LEVY Léa - OCRES TD2
 
-API doc : https://www.getpostman.com/collections/cec391ac5719a2dc7e75
+API doc : https://documenter.getpostman.com/view/9518507/SW7bzRdd
 
 # TP 3: API
 
