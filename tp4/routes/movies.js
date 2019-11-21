@@ -1,25 +1,22 @@
 const express = require('express');
 var _ = require('lodash');
+const axios = require('axios');
 
 const router = express.Router();
 
-movies = [{
+const API_KEY = "79dc059f";
+const API_URL = "http://www.omdbapi.com/";
+
+movies = [/*{
     id: '0',
     movie: 'Seven Sisters'
-    /*
-    yearOfRelease: Number,
-    duration: Number, // en minutes,
-    actors: [String, String],
-    poster: String, // lien vers une image d'affiche,
-    boxOffice: Number, // en USD$,
-    rottenTomatoesScore: Number
-    */
 },
 {
-    id: '2',
+    id: '2 ',
     movie: 'Captain Marvel'
-},
+},*/
 ]
+
 
 /* GET all movies */
 router.get('/', (req, res) => {
@@ -40,7 +37,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-/* PUT new movie */
+/* PUT new movie 
 router.put('/', (req, res) => {
     // Get the data from request from request
     const { movie } = req.body;
@@ -53,7 +50,43 @@ router.put('/', (req, res) => {
         message: `Just added ${id}`,
         movies
     });
-});
+});*/
+
+/* PUT new movie axios method */
+router.put('/', (req,res) => {
+    const { name } = req.body;
+
+    axios.get(`${API_URL}?t=${name}&apikey=${API_KEY}`).then(({data}) => {
+        const id = _.uniqueId();
+
+        let movie = data.Title;
+        let yearOfRelease = data.Year;
+        let duration = data.Runtime;
+        let actors = data.Actors;
+        let poster = data.Poster;
+        let boxOffice = data.BoxOffice;
+        let rottenTomatoesScore = data.Ratings[1].Value;
+
+        const db = { 
+            "id": id,
+            "movie" : movie,
+            "yearOfRelease" : yearOfRelease,
+            "duration" : duration,
+            "actors" : actors,
+            "poster" : poster,
+            "boxOffice" : boxOffice,
+            "rottenTomatoesScore" : rottenTomatoesScore
+        };
+
+        movies.push(db);
+        
+        res.json({
+            message: `Just added ${movie}`,
+            movies
+        });        
+    })
+})
+
 
 /* DELETE movie */
 router.delete('/:id', (req, res) => {
