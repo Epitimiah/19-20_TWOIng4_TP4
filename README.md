@@ -1,5 +1,7 @@
 LEVY Léa - OCRES TD2
 
+API doc : https://www.getpostman.com/collections/cec391ac5719a2dc7e75
+
 # TP 3: API
 
 A lire impérativement avant de commencer quoi que ce soit, ce sont les règles que vous devrez appliquer tout au long du semestre:
